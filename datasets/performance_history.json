@@ -1,0 +1,86 @@
+[
+    {
+        "filename": "performance_test.csv",
+        "evaluated_at": "2026-11-03T05:44:05.085031+00:00",
+        "total_predictions": 10,
+        "metrics": {
+            "accuracy": 0.8,
+            "precision": 0.8,
+            "recall": 0.8,
+            "f1_score": 0.8
+        },
+        "status": "Performance evaluation successful"
+    },
+    {
+        "filename": "performance_test.csv",
+        "evaluated_at": "2026-11-03T05:47:39.356658+00:00",
+        "total_predictions": 10,
+        "metrics": {
+            "accuracy": 0.8,
+            "precision": 0.8,
+            "recall": 0.8,
+            "f1_score": 0.8
+        },
+        "status": "Performance evaluation successful"
+    },
+    {
+        "filename": "performance_test.csv",
+        "evaluated_at": "2026-11-03T06:39:07.010806+00:00",
+        "total_predictions": 10,
+        "metrics": {
+            "accuracy": 0.8,
+            "precision": 0.8,
+            "recall": 0.8,
+            "f1_score": 0.8
+        },
+        "status": "Performance evaluation successful"
+    },
+    {
+        "filename": "regression_test.csv",
+        "evaluated_at": "2026-11-09T05:42:21.181004+00:00",
+        "total_predictions": 5,
+        "metrics": {
+            "mae": 80000.0,
+            "mse": 7000000000.0,
+            "rmse": 83666.0027,
+            "r2_score": 0.986
+        },
+        "status": "Regression evaluation successful"
+    },
+    {
+        "filename": "regression_test.csv",
+        "evaluated_at": "2026-11-09T06:40:02.400755+00:00",
+        "total_predictions": 5,
+        "metrics": {
+            "accuracy": 0.0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1_score": 0.0
+        },
+        "status": "Performance evaluation successful"
+    },
+    {
+        "filename": "regression_test.csv",
+        "evaluated_at": "2026-11-10T06:35:23.666537+00:00",
+        "total_predictions": 5,
+        "metrics": {
+            "mae": 80000.0,
+            "mse": 7000000000.0,
+            "rmse": 83666.0027,
+            "r2_score": 0.986
+        },
+        "status": "Regression evaluation successful"
+    },
+    {
+        "filename": "regression_test.csv",
+        "evaluated_at": "2026-11-10T07:51:09.951469+00:00",
+        "total_predictions": 5,
+        "metrics": {
+            "mae": 80000.0,
+            "mse": 7000000000.0,
+            "rmse": 83666.0027,
+            "r2_score": 0.986
+        },
+        "status": "Regression evaluation successful"
+    }
+]

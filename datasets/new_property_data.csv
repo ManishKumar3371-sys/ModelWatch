@@ -1,0 +1,8 @@
+property_id,city,property_type,locality,area_sqft,area_basis,bedrooms,property_age,price_inr,price_type,source_name,source_url,collected_date
+PRY001,Prayagraj,Independent House,Gauspur,3000,Built-up,4,10+,5000000,Asking,BuySellProperty,https://buysellproperty.in,2026-11-03
+PUN001,Pune,Flat,Baner,1500,Super Built-up,2,5,12000000,Asking,Magicbricks,https://www.magicbricks.com,2026-11-03
+PRY002,Prayagraj,Flat,Civil Lines,3500,Built-up,3,8,30000000,Asking,RealEstateIndia,https://www.realestateindia.com,2026-11-03
+PRY003,Prayagraj,Plot,ADA Colony,2500,Plot Area,0,0,12000000,Asking,Magicbricks,https://www.magicbricks.com,2026-11-03
+PUN003,Pune,Independent House,Baner,4000,Carpet,3,6,45000000,Asking,Magicbricks,https://www.magicbricks.com,2026-11-03
+PUN004,Pune,Flat,Maan Road,2200,Carpet,3,4,20000000,Asking,Magicbricks,https://www.magicbricks.com,2026-11-03
+PUN005,Pune,Independent House,Keshav Nagar,2800,Built-up,3,12,25000000,Asking,Housing.com,https://housing.com,2026-11-03

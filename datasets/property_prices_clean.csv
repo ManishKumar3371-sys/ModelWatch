@@ -1,0 +1,8 @@
+property_id,city,property_type,locality,area_sqft,area_basis,bedrooms,property_age,price_inr,price_type,source_name,source_url,collected_date
+PRY001,Prayagraj,Independent House,Gauspur,1743.0,Built-up,4.0,10+,1700000.0,Asking,BuySellProperty,https://buysellproperty.in/buy/prayagraj/gauspur/4-bhk-independent-house-for-sale-in-gauspur-allahabad-212213-f5fc,2026-11-03
+PUN001,Pune,Flat,Baner,627.0,Super Built-up,2.0,,8000000.0,Asking,Magicbricks,https://www.magicbricks.com/propertyDetails/2-BHK-627-Sq-ft-Multistorey-Apartment-FOR-Sale-Baner-in-Pune&id=4d423837323335323439,2026-11-03
+PRY002,Prayagraj,Flat,Civil Lines,1800.0,Built-up,3.0,,21500000.0,Asking,RealEstateIndia,https://www.realestateindia.com/property-detail/3bkh-flats-apartments-for-sale-in-civil-lines-allahabad-in-sai-dham-residency-1800-sq-ft-2-15-cr-1507047.htm,2026-11-03
+PRY003,Prayagraj,Plot,ADA Colony,1350.0,Plot Area,,,6300000.0,Asking,Magicbricks,https://www.magicbricks.com/propertyDetails/150-Sq-yrd-Residential-Plot-FOR-Sale-ADA-Colony-in-Allahabad&id=4d423834303537363035,2026-11-03
+PUN003,Pune,Independent House,Baner,2100.0,Carpet,3.0,,30000000.0,Asking,Magicbricks,https://www.magicbricks.com/propertyDetails/3-BHK-2100-Sq-ft-Villa-FOR-Sale-Baner-in-Pune&id=4d423836383936303539,2026-11-03
+PUN004,Pune,Flat,Maan Road,1161.0,Carpet,3.0,,13900000.0,Asking,Magicbricks,https://www.magicbricks.com/propertyDetails/3-BHK-1517-Sq-ft-Multistorey-Apartment-FOR-Sale-Maan-Road-in-Pune&id=4d423832363139363335,2026-11-03
+PUN005,Pune,Independent House,Keshav Nagar,1575.0,Built-up,3.0,12,16500000.0,Asking,Housing.com,https://housing.com/in/buy/resale/page/21254350-3-bhk-independent-house-in-keshav-nagar-for-rs-16500000,2026-11-03

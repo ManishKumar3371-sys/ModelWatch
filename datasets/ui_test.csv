@@ -1,0 +1,3 @@
+property_id,city,property_type,locality,area_sqft,area_basis,bedrooms,property_age,price_inr,price_type,source_name,source_url,collected_date
+UI001,Pune,Flat,Hinjewadi,900,Carpet,2,5,7000000,Asking,TestSource,https://example.com/ui1,2026-11-03
+UI002,Prayagraj,Independent House,Civil Lines,1400,Built-up,3,8,9000000,Asking,TestSource,https://example.com/ui2,2026-11-03

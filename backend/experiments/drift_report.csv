@@ -1,0 +1,4 @@
+feature,reference_count,new_count,ks_statistic,p_value,drift_detected,severity
+area,10,10,1.0,1e-05,True,HIGH
+bedrooms,10,10,0.5,0.16782,False,LOW
+age,10,10,0.4,0.41752,False,LOW
