@@ -1,4 +1,4 @@
-﻿venv/
+venv/
 __pycache__/
 *.py[cod]
 .env
@@ -12,7 +12,26 @@ frontend/dist/
 *.log
 *.tmp
 
-# Backup files
+# Backup and Archive files
 *_backup.py
 *_backup.jsx
+archive/
 
+
+# Ignore all local backup files
+*backup*
+*.bak
+*_before_*
+# Runtime-generated monitoring history
+datasets/drift_history.json
+datasets/performance_history.json
+experiments/prediction_history.json
+experiments/training_logs.jsonl
+
+# Temporary and test datasets
+datasets/*test*.csv
+datasets/*experiment*.csv
+datasets/property_prices_manual.csv
+datasets/property_prices_backup*.csv
+datasets/property_prices_before_*.csv
+datasets/verified_registered_prices_mh_up.csv

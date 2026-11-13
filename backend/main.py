@@ -1,3 +1,4 @@
+import os
 import json
 from datetime import datetime, timezone
 from io import BytesIO
@@ -7,10 +8,14 @@ import joblib
 import pandas as pd
 from pathlib import Path
 from pydantic import BaseModel
-from drift_detection import detect_drift as sample_detect_drift
-
+from backend.drift_detection import detect_drift
+from backend.email_alert import send_high_drift_alert
+from backend.model_registry import (
+    get_active_model,
+    get_all_models,
+    set_active_model
+)
 import pandas as pd
-from scipy.stats import ks_2samp, chi2_contingency
 from sklearn.metrics import (
     accuracy_score,
     precision_score,
@@ -21,7 +26,9 @@ from sklearn.metrics import (
     r2_score
 )
 
-from fastapi import FastAPI, UploadFile, File, HTTPException
+from fastapi import FastAPI, UploadFile, File, HTTPException, Request
+from fastapi.responses import FileResponse, HTMLResponse, RedirectResponse
+from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 
@@ -30,44 +37,161 @@ app = FastAPI(
     title="ModelWatch API",
     description="ML Model Monitoring and Drift Detection Platform",
     version="1.0.0"
-)# House Price Prediction Model
-BASE_DIR = Path(__file__).resolve().parent.parent
-MODEL_PATH = BASE_DIR / "trained_models" / "house_price_model.pkl"
+)
+# House Price Prediction Model
 
-house_price_model = joblib.load(MODEL_PATH)
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+MODEL_PATH = (
+    BASE_DIR
+    / "trained_models"
+    / "property_price_model.pkl"
+)
+HISTORY_PATH = (
+    BASE_DIR
+    / "experiments"
+    / "prediction_history.json"
+)
 
 
 class HousePredictionInput(BaseModel):
-    area: float
-    bedrooms: int
-    age: float
+    city: str
+    property_type: Literal[
+        "Flat",
+        "Independent House",
+        "Plot"
+    ]
+    locality: str
+    area_sqft: float = Field(gt=0)
+    area_basis: str
+    bedrooms: int | None = Field(default=None, ge=1)
+    property_age: str | None = None
+    price_type: Literal["Asking", "Registered"] = "Asking"
 
 
 @app.post("/predict-house-price")
 def predict_house_price(data: HousePredictionInput):
 
-    input_data = pd.DataFrame([{
-        "area": data.area,
-        "bedrooms": data.bedrooms,
-        "age": data.age
-    }])
+    active_model = get_active_model()
 
-    prediction = house_price_model.predict(input_data)[0]
+    if active_model is None:
+        raise HTTPException(
+            status_code=500,
+            detail="No active model found in registry. Register a model first."
+        )
+
+    active_model_path = BASE_DIR / active_model["model_path"]
+
+    if not active_model_path.exists():
+        raise HTTPException(
+            status_code=500,
+            detail="Active model file not found. Check the model registry."
+        )
+
+    try:
+        house_price_model = joblib.load(active_model_path)
+
+        input_data = pd.DataFrame([{
+            "city": data.city,
+            "property_type": data.property_type,
+            "locality": data.locality,
+            "area_sqft": data.area_sqft,
+            "area_basis": data.area_basis,
+            "bedrooms": data.bedrooms,
+            "property_age": data.property_age,
+            "price_type": data.price_type
+        }])
+
+        prediction = house_price_model.predict(input_data)[0]
+        # Save prediction history
+        history = load_json_file(HISTORY_PATH)
+
+        history_record = {
+            "id": max((item.get("id", 0) for item in history), default=0) + 1,
+            "timestamp": current_timestamp(),
+            "city": data.city,
+            "property_type": data.property_type,
+            "locality": data.locality,
+            "area_sqft": data.area_sqft,
+            "area_basis": data.area_basis,
+            "bedrooms": data.bedrooms,
+            "property_age": data.property_age,
+            "price_type": data.price_type,
+            "predicted_price": round(float(prediction), 2),
+            "model": active_model.get(
+                "model_name", "Property Price Random Forest"
+            ),
+            "model_version": active_model["version"]
+        }
+
+        HISTORY_PATH.parent.mkdir(parents=True, exist_ok=True)
+        history.append(history_record)
+        save_json_file(HISTORY_PATH, history)
+
+
+        return {
+            "status": "success",
+            "predicted_price": round(float(prediction), 2),
+            "currency": "INR",
+            "model": active_model.get(
+                "model_name", "Property Price Random Forest"
+            ),
+            "model_version": active_model["version"],
+            "warning": "Experimental estimate based on a small dataset; not a verified market valuation."
+        }
+
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail=f"Prediction failed: {str(e)}"
+        )
+@app.get("/prediction-history")
+def get_prediction_history():
+    history = load_json_file(HISTORY_PATH)
 
     return {
         "status": "success",
-        "predicted_price": round(float(prediction), 2),
-        "currency": "INR"
+        "total_predictions": len(history),
+        "history": list(reversed(history))
     }
+@app.delete("/prediction-history/{prediction_id}")
+def delete_prediction(prediction_id: int):
 
+    history = load_json_file(HISTORY_PATH)
 
+    updated_history = [
+        item for item in history
+        if item.get("id") != prediction_id
+    ]
+
+    if len(updated_history) == len(history):
+        raise HTTPException(
+            status_code=404,
+            detail="Prediction not found"
+        )
+
+    save_json_file(HISTORY_PATH, updated_history)
+
+    return {
+        "status": "success",
+        "message": "Prediction deleted successfully",
+        "deleted_id": prediction_id
+    }
 # CORS configuration
+default_origins = [
+    "http://localhost:5173",
+    "http://localhost:5174",
+    "http://localhost:3000",
+    "http://127.0.0.1:5173",
+    "http://127.0.0.1:5174",
+    "http://127.0.0.1:3000",
+]
+custom_origins = [o.strip() for o in os.getenv("CORS_ORIGINS", "").split(",") if o.strip()]
+cors_origins = custom_origins if custom_origins else default_origins
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:5173",
-        "http://localhost:5174"
-    ],
+    allow_origins=cors_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -75,12 +199,12 @@ app.add_middleware(
 
 
 # Dataset and storage paths
-BASE_DIR = Path(__file__).resolve().parent.parent
 DATASET_DIR = BASE_DIR / "datasets"
 
-REFERENCE_FILE = DATASET_DIR / "reference.csv"
+REFERENCE_FILE = DATASET_DIR / "property_prices.csv"
 NEW_DATA_FILE = DATASET_DIR / "new_data.csv"
 PERFORMANCE_HISTORY_FILE = DATASET_DIR / "performance_history.json"
+DRIFT_HISTORY_FILE = DATASET_DIR / "drift_history.json"
 MODEL_REGISTRY_FILE = DATASET_DIR / "models.json"
 PROPERTY_DATA_FILE = DATASET_DIR / "property_prices.csv"
 
@@ -175,111 +299,6 @@ async def detect_drift_api(
         )
 
 
-# -----------------------------
-# Drift Detection
-# -----------------------------
-
-
-def detect_drift(reference_data, new_data):
-
-    if list(reference_data.columns) != list(new_data.columns):
-        raise HTTPException(
-            status_code=400,
-            detail="CSV columns must match reference dataset"
-        )
-
-    results = []
-
-    print("Reference Data Types:")
-    print(reference_data.dtypes)
-
-    print("New Data Types:")
-    print(new_data.dtypes)
-
-    
-    ignored_columns = [
-        "property_id",
-        "source_url",
-        "collected_date"
-    ]
-
-    for column in reference_data.columns:
-
-        if column in ignored_columns:
-            continue
-
-        reference_values = reference_data[column].dropna()
-        new_values = new_data[column].dropna()
-
-        if len(reference_values) == 0 or len(new_values) == 0:
-            continue
-
-        # Numeric Drift Detection
-        if pd.api.types.is_numeric_dtype(reference_data[column]):
-
-            statistic, p_value = ks_2samp(
-                reference_values,
-                new_values
-            )
-
-            results.append({
-                "feature": column,
-                "test_type": "KS Test",
-                "ks_statistic": round(float(statistic), 4),
-                "p_value": round(float(p_value), 5),
-                "status": (
-                    "DRIFT DETECTED"
-                    if p_value < 0.05
-                    else "NO SIGNIFICANT DRIFT"
-                )
-            })
-
-        # Categorical Drift Detection
-        else:
-
-            combined = pd.concat([
-                reference_values.astype(str).reset_index(drop=True),
-                new_values.astype(str).reset_index(drop=True)
-            ], ignore_index=True)
-
-            dataset_labels = (
-                ["reference"] * len(reference_values)
-                + ["new"] * len(new_values)
-            )
-
-            contingency_table = pd.crosstab(
-                combined,
-                dataset_labels
-            )
-
-            if contingency_table.shape[0] < 2:
-                continue
-
-            chi2, p_value, dof, expected = chi2_contingency(
-                contingency_table
-            )
-
-            results.append({
-                "feature": column,
-                "test_type": "Chi-Square Test",
-                "chi2_statistic": round(float(chi2), 4),
-                "p_value": round(float(p_value), 5),
-                "status": (
-                    "DRIFT DETECTED"
-                    if p_value < 0.05
-                    else "NO SIGNIFICANT DRIFT"
-                )
-            })
-    return {
-        "total_features": len(results),
-        "drifted_features": sum(
-            1 for item in results
-            if item["status"] == "DRIFT DETECTED"
-        ),
-        "results": results
-    }
-
-
 
 @app.get("/drift-report")
 def get_drift_report():
@@ -293,7 +312,30 @@ def get_drift_report():
     reference_data = pd.read_csv(REFERENCE_FILE)
     new_data = pd.read_csv(NEW_DATA_FILE)
 
-    return detect_drift(reference_data, new_data)
+    report = detect_drift(reference_data, new_data)
+
+    history = load_json_file(DRIFT_HISTORY_FILE)
+    latest = history[-1] if history else {}
+
+    return {
+        "filename": latest.get("filename", NEW_DATA_FILE.name),
+        "uploaded_at": latest.get("uploaded_at"),
+        "report_generated_at": latest.get("report_generated_at"),
+        **report
+    }
+
+
+@app.get("/drift-history")
+def get_drift_history():
+
+    history = load_json_file(DRIFT_HISTORY_FILE)
+
+    return {
+        "total_reports": len(history),
+        "history": list(reversed(history))
+    }
+
+
 
 
 @app.post("/upload-dataset")
@@ -310,7 +352,6 @@ async def upload_dataset(file: UploadFile = File(...)):
             status_code=404,
             detail="Reference dataset not found"
         )
-
     try:
         contents = await file.read()
         new_data = pd.read_csv(BytesIO(contents))
@@ -323,13 +364,71 @@ async def upload_dataset(file: UploadFile = File(...)):
             )
 
         report = detect_drift(reference_data, new_data)
-        
+
+        # Generate HIGH severity drift alerts
+        high_drift_features = [
+            item.get("feature")
+            for item in report.get("results", [])
+            if item.get("status") != "INSUFFICIENT DATA"
+            and item.get("severity") == "HIGH"
+        ]
+
+        has_alert = len(high_drift_features) > 0
+
+        alert = {
+            "has_alert": has_alert,
+            "alert_level": "HIGH" if has_alert else "NONE",
+            "alert_message": (
+                f"High drift detected in: {', '.join(high_drift_features)}"
+                if has_alert
+                else "No high severity drift detected"
+            ),
+            "alert_features": high_drift_features
+        }
+
+        report.update(alert)
         new_data.to_csv(NEW_DATA_FILE, index=False)
 
-        return {
+        timestamp = current_timestamp()
+
+        history_record = {
             "filename": file.filename,
+            "uploaded_at": timestamp,
+            "report_generated_at": timestamp,
             **report
         }
+
+        history = load_json_file(DRIFT_HISTORY_FILE)
+        history.append(history_record)
+        save_json_file(DRIFT_HISTORY_FILE, history)
+
+                # Debug HIGH drift email trigger
+        print("[ModelWatch] has_alert:", has_alert)
+
+        email_status = "NOT_REQUIRED"
+
+        if has_alert:
+            print("[ModelWatch] HIGH drift detected. Sending email...")
+
+            email_sent = await send_high_drift_alert(
+                file.filename,
+                high_drift_features
+            )
+
+            print("[ModelWatch] Email send result:", email_sent)
+
+            if email_sent:
+                email_status = "SENT"
+            else:
+                email_status = "FAILED"
+
+        else:
+            print("[ModelWatch] No HIGH drift. Email not required.")
+            history_record["email_status"] = email_status
+        history[-1]["email_status"] = email_status
+
+        save_json_file(DRIFT_HISTORY_FILE, history)
+        return history_record
 
     except pd.errors.EmptyDataError:
         raise HTTPException(
@@ -342,6 +441,14 @@ async def upload_dataset(file: UploadFile = File(...)):
             status_code=400,
             detail="Unable to parse CSV"
         )
+
+    except ValueError as ve:
+        raise HTTPException(
+            status_code=400,
+            detail=str(ve)
+        )
+
+
         # -----------------------------
 # Bulk Property Dataset Import
 # -----------------------------
@@ -579,6 +686,11 @@ async def evaluate_model(file: UploadFile = File(...)):
             status_code=400,
             detail="Only CSV files are allowed"
         )
+    if "regression" in file.filename.lower():
+        raise HTTPException(
+        status_code=400,
+        detail="This is a regression dataset. Please use Regression Evaluation."
+    )
 
     try:
         contents = await file.read()
@@ -631,7 +743,8 @@ async def evaluate_model(file: UploadFile = File(...)):
         )
 
         result = {
-            "filename": file.filename,
+            "evaluation_type": "classification",
+             "filename": file.filename,
             "evaluated_at": current_timestamp(),
             "total_predictions": int(len(data)),
             "metrics": {
@@ -661,6 +774,12 @@ async def evaluate_model(file: UploadFile = File(...)):
             status_code=400,
             detail="Unable to parse CSV"
         )
+
+    except ValueError as ve:
+        raise HTTPException(
+            status_code=400,
+            detail=str(ve)
+        )
     # -----------------------------
 # Regression Model Evaluation
 # -----------------------------
@@ -673,7 +792,11 @@ async def evaluate_regression(file: UploadFile = File(...)):
             status_code=400,
             detail="Only CSV files are allowed"
         )
-
+    if "performance" in file.filename.lower():
+        raise HTTPException(
+        status_code=400,
+        detail="This is a classification dataset. Please use Classification Evaluation."
+    )
     try:
         contents = await file.read()
         data = pd.read_csv(BytesIO(contents))
@@ -707,6 +830,7 @@ async def evaluate_regression(file: UploadFile = File(...)):
         r2 = r2_score(actual, predicted)
 
         result = {
+            "evaluation_type": "regression",
             "filename": file.filename,
             "evaluated_at": current_timestamp(),
             "total_predictions": int(len(data)),
@@ -736,7 +860,7 @@ async def evaluate_regression(file: UploadFile = File(...)):
         raise HTTPException(
             status_code=400,
             detail="Unable to parse CSV file"
-        )    
+        )
 # -----------------------------
 # PROPERTY DATASET MANAGEMENT
 # -----------------------------
@@ -752,7 +876,7 @@ def get_property_dataset():
 
     try:
         data = pd.read_csv(PROPERTY_DATA_FILE)
-        data = data.fillna("")
+        data = data.astype(object).where(pd.notna(data), "")
 
         return {
             "total_records": len(data),
@@ -912,3 +1036,434 @@ def update_model_status(model_id: str, status_data: ModelStatusUpdate):
         status_code=404,
         detail="Model not found"
     )
+
+
+# ----------------------------
+# MODEL REGISTRY API ROUTES
+# ----------------------------
+
+# MODEL_REGISTRY_API_ROUTES
+
+@app.get("/model-registry")
+def get_model_registry():
+    models = get_all_models()
+
+    return {
+        "total_versions": len(models),
+        "active_version": (
+            get_active_model()["version"]
+            if get_active_model() else None
+        ),
+        "models": models
+    }
+
+
+@app.get("/model-registry/active")
+def get_active_model_details():
+    model = get_active_model()
+
+    if model is None:
+        raise HTTPException(
+            status_code=404,
+            detail="No active model found."
+        )
+
+    return {
+        "active_model": model
+    }
+
+
+
+@app.post("/model-registry/{version}/activate")
+def activate_registry_model(version: str):
+    try:
+        selected_model = set_active_model(version)
+
+    except ValueError:
+        raise HTTPException(
+            status_code=404,
+            detail=f"Model version {version} not found."
+        )
+
+    except FileNotFoundError as error:
+        raise HTTPException(
+            status_code=409,
+            detail=str(error)
+        )
+
+    return {
+        "message": f"Model {version} activated successfully.",
+        "active_model": selected_model
+    }
+
+
+
+@app.get("/model-registry/compare")
+def compare_model_versions(versions: str):
+    requested_versions = [
+        item.strip() for item in versions.split(",") if item.strip()
+    ]
+
+    if len(requested_versions) < 2:
+        raise HTTPException(
+            status_code=400,
+            detail="Provide at least two versions, e.g. v1,v2."
+        )
+
+    if len(set(requested_versions)) != len(requested_versions):
+        raise HTTPException(
+            status_code=400,
+            detail="Duplicate versions are not allowed."
+        )
+
+    all_models = get_all_models()
+    model_lookup = {
+        model["version"]: model for model in all_models
+    }
+
+    missing_versions = [
+        version for version in requested_versions
+        if version not in model_lookup
+    ]
+
+    if missing_versions:
+        raise HTTPException(
+            status_code=404,
+            detail=f"Versions not found: {', '.join(missing_versions)}"
+        )
+
+    comparison = []
+
+    for version in requested_versions:
+        model = model_lookup[version]
+
+        comparison.append({
+            "version": model["version"],
+            "algorithm": model.get("algorithm"),
+            "trained_at": model.get("trained_at"),
+            "r2_score": model.get("r2_score"),
+            "mae": model.get("mae"),
+            "rmse": model.get("rmse"),
+            "status": model.get("status")
+        })
+
+    return {
+        "comparison": comparison
+    }
+@app.get("/training-logs")
+def get_training_logs():
+
+    log_path = BASE_DIR / "experiments" / "training_logs.jsonl"
+
+    if not log_path.exists():
+        return {
+            "total_runs": 0,
+            "logs": []
+        }
+
+    logs = []
+
+    try:
+        with open(log_path, "r", encoding="utf-8") as file:
+            for line in file:
+                if not line.strip():
+                    continue
+
+                try:
+                    logs.append(json.loads(line))
+                except json.JSONDecodeError:
+                    continue
+
+    except OSError as error:
+        raise HTTPException(
+            status_code=500,
+            detail=f"Unable to read training logs: {error}"
+        )
+
+    logs.reverse()
+
+    return {
+        "total_runs": len(logs),
+        "logs": logs
+    }
+
+
+# -----------------------------
+# Pan-India State Data Tracker & Verified Registry APIs
+# -----------------------------
+
+VERIFIED_DEEDS_CSV = DATASET_DIR / "verified_registered_prices_mh_up.csv"
+GOV_AUDIT_LOG_FILE = BASE_DIR / "experiments" / "gov_source_audit.json"
+
+@app.get("/state-data-tracker")
+def get_state_data_tracker():
+    """
+    Returns state-wise data access tiers, registration portal metadata,
+    and transparency classifications across Indian States and UTs.
+    """
+    tracker_file = BASE_DIR / "docs" / "STATE_DATA_ACCESS_TRACKER.md"
+
+    # Read latest audit if available
+    latest_audit = None
+    if GOV_AUDIT_LOG_FILE.exists():
+        try:
+            with open(GOV_AUDIT_LOG_FILE, "r", encoding="utf-8") as f:
+                audit_history = json.load(f)
+                if audit_history:
+                    latest_audit = audit_history[-1]
+        except Exception:
+            pass
+
+    return {
+        "status": "success",
+        "framework": "Pan-India Federated Land Registry Architecture",
+        "launch_states": [
+            {
+                "state": "Maharashtra",
+                "code": "MH",
+                "status": "ACTIVE_PILOT",
+                "portal": "IGR Maharashtra (SARITA 2.0 / e-Search)",
+                "data_tier": 1,
+                "data_type": "Registered Transaction Deeds + Ready Reckoner (ASR)",
+                "verified_deeds_available": 71,
+                "coverage_cities": ["Pune", "Mumbai MMR", "Nagpur"]
+            },
+            {
+                "state": "Uttar Pradesh",
+                "code": "UP",
+                "status": "ACTIVE_PILOT",
+                "portal": "IGRSUP (Stamp & Registration Dept UP)",
+                "data_tier": 1,
+                "data_type": "Registered Transaction Deeds + District Circle Rates",
+                "verified_deeds_available": 53,
+                "coverage_cities": ["Prayagraj", "Lucknow", "Noida", "Varanasi"]
+            }
+        ],
+        "summary": {
+            "total_jurisdictions_tracked": 36,
+            "tier_1_registered_deeds_online": 6,
+            "tier_2_guideline_rates_only": 14,
+            "tier_3_request_or_visit_required": 16,
+            "pilot_verified_deeds_count": 124
+        },
+        "tiers": {
+            "tier_1_registered": [
+                {"state": "Maharashtra", "code": "MH", "portal": "igrmaharashtra.gov.in", "access": "Free public e-Search with user login"},
+                {"state": "Uttar Pradesh", "code": "UP", "portal": "igrsup.gov.in", "access": "Free public deed search by property details"},
+                {"state": "Tamil Nadu", "code": "TN", "portal": "tnreginet.gov.in", "access": "Public EC with transaction consideration"},
+                {"state": "Telangana", "code": "TG", "portal": "registration.telangana.gov.in", "access": "Market value & EC with consideration"},
+                {"state": "Haryana", "code": "HR", "portal": "jamabandi.nic.in", "access": "Free public deed search by tehsil"},
+                {"state": "Andhra Pradesh", "code": "AP", "portal": "registration.ap.gov.in", "access": "Public deed & valuation search"}
+            ],
+            "tier_2_guideline_only": [
+                {"state": "Karnataka", "code": "KA", "portal": "kaverionline.karnataka.gov.in", "benchmark": "Guidance Value"},
+                {"state": "Delhi", "code": "DL", "portal": "doris.delhigovt.nic.in", "benchmark": "Circle Rates (A-H)"},
+                {"state": "Gujarat", "code": "GJ", "portal": "garvi.gujarat.gov.in", "benchmark": "Jantri Rates"},
+                {"state": "West Bengal", "code": "WB", "portal": "wbregistration.gov.in", "benchmark": "Market Value of Property"},
+                {"state": "Rajasthan", "code": "RJ", "portal": "epanjiyan.rajasthan.gov.in", "benchmark": "DLC Rates"},
+                {"state": "Madhya Pradesh", "code": "MP", "portal": "mpigr.gov.in", "benchmark": "Collector Guideline Rates"},
+                {"state": "Kerala", "code": "KL", "portal": "keralaregistration.gov.in", "benchmark": "Fair Value of Land"},
+                {"state": "Punjab", "code": "PB", "portal": "punjabrevenue.nic.in", "benchmark": "Collector Rates"},
+                {"state": "Odisha", "code": "OD", "portal": "igrodisha.gov.in", "benchmark": "Benchmark Valuation"},
+                {"state": "Jharkhand", "code": "JH", "portal": "jharnibandhan.gov.in", "benchmark": "Minimum Evaluation Rate"},
+                {"state": "Chhattisgarh", "code": "CG", "portal": "epanjiyan.cg.gov.in", "benchmark": "Collector Guideline"},
+                {"state": "Himachal Pradesh", "code": "HP", "portal": "himachal.nic.in/revenue", "benchmark": "Circle Rates"},
+                {"state": "Uttarakhand", "code": "UK", "portal": "registration.uk.gov.in", "benchmark": "Circle Rates"},
+                {"state": "Goa", "code": "GA", "portal": "ngdrs.goa.gov.in", "benchmark": "Minimum Land Rates"}
+            ],
+            "tier_3_request_required": [
+                {"jurisdiction": "Bihar", "code": "BR", "access_mode": "SRO Certified Copy / RTI Application"},
+                {"jurisdiction": "Assam", "code": "AS", "access_mode": "Physical District Registrar Visit"},
+                {"jurisdiction": "Jammu & Kashmir", "code": "JK", "access_mode": "SRO In-Person Application"},
+                {"jurisdiction": "Chandigarh", "code": "CH", "access_mode": "Departmental Request"},
+                {"jurisdiction": "North-Eastern States (7 States)", "code": "NE", "access_mode": "Customary Tribal Council / DC Office"},
+                {"jurisdiction": "Union Territories (5 UTs)", "code": "UT", "access_mode": "Collectorate Revenue Office Visit"}
+            ]
+        },
+        "latest_audit": latest_audit
+    }
+
+
+@app.get("/verified-registered-properties")
+def get_verified_registered_properties(state: str | None = None, limit: int = 50, page: int = 1):
+    """
+    Returns verified registered property transactions for Maharashtra and Uttar Pradesh
+    including official SRO deed IDs, Ready Reckoner / Circle rates, and stamp duty paid.
+    """
+    if not VERIFIED_DEEDS_CSV.exists():
+        raise HTTPException(
+            status_code=404,
+            detail="Verified registered deeds dataset not found. Run builder script first."
+        )
+
+    try:
+        df = pd.read_csv(VERIFIED_DEEDS_CSV)
+        if state:
+            df = df[df["state"].str.lower() == state.strip().lower()]
+
+        total_records = len(df)
+        total_pages = max(1, (total_records + limit - 1) // limit)
+        start_idx = (page - 1) * limit
+        end_idx = start_idx + limit
+
+        paginated_data = df.iloc[start_idx:end_idx].to_dict(orient="records")
+
+        return {
+            "status": "success",
+            "total_records": total_records,
+            "page": page,
+            "limit": limit,
+            "total_pages": total_pages,
+            "state_filter": state,
+            "records": paginated_data
+        }
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail=f"Failed to fetch verified registered records: {str(e)}"
+        )
+
+
+# -----------------------------
+# Continuous Retraining & What-If Scenario Simulator APIs
+# -----------------------------
+
+class PriceScenarioInput(BaseModel):
+    city: str
+    property_type: Literal["Flat", "Independent House", "Plot"]
+    locality: str
+    area_sqft: float = Field(gt=0)
+    area_basis: str
+    bedrooms: int | None = Field(default=None, ge=1)
+    property_age: str | None = None
+    price_type: Literal["Asking", "Registered"] = "Asking"
+
+    # Scenario Modifiers
+    has_metro_connectivity: bool = False
+    ready_reckoner_revision_percent: float = Field(default=0.0, ge=-20.0, le=50.0)
+    infrastructure_development: Literal["None", "Moderate", "High"] = "None"
+    projected_years: int = Field(default=0, ge=0, le=20)
+
+
+@app.post("/auto-retrain")
+def trigger_auto_retrain(auto_promote: bool = False):
+    """
+    Triggers the continuous model retraining pipeline, training a candidate model
+    on the latest merged dataset and comparing it against the active production model.
+    """
+    from backend.auto_retrain import run_continuous_retraining
+    try:
+        result = run_continuous_retraining(auto_promote=auto_promote)
+        return result
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail=f"Continuous retraining pipeline failed: {str(e)}"
+        )
+
+
+@app.post("/simulate-price-scenario")
+def simulate_price_scenario(scenario: PriceScenarioInput):
+    """
+    What-If Real Estate Scenario Simulator.
+    Computes baseline valuation via the active model and simulates the price impact
+    of transit infrastructure (metro), government circle rate revisions, and time appreciation.
+    """
+    # 1. Baseline valuation
+    baseline_result = predict_house_price(HousePredictionInput(
+        city=scenario.city,
+        property_type=scenario.property_type,
+        locality=scenario.locality,
+        area_sqft=scenario.area_sqft,
+        area_basis=scenario.area_basis,
+        bedrooms=scenario.bedrooms,
+        property_age=scenario.property_age,
+        price_type=scenario.price_type
+    ))
+
+    baseline_price = float(baseline_result["predicted_price"])
+    simulated_price = baseline_price
+    factors = []
+
+    # Transit premium (Metro connectivity adds 10-14%)
+    if scenario.has_metro_connectivity:
+        metro_multiplier = 1.12
+        simulated_price *= metro_multiplier
+        factors.append({
+            "factor": "Metro Transit Corridor Proximity",
+            "impact_percentage": "+12.0%",
+            "description": "High-speed transit accessibility premium based on urban transit surveys."
+        })
+
+    # Infrastructure development
+    if scenario.infrastructure_development == "Moderate":
+        simulated_price *= 1.05
+        factors.append({
+            "factor": "Zonal Infrastructure Expansion",
+            "impact_percentage": "+5.0%",
+            "description": "Moderate road widening, utility improvements, or arterial highway proximity."
+        })
+    elif scenario.infrastructure_development == "High":
+        simulated_price *= 1.12
+        factors.append({
+            "factor": "Major Catalytic Corridor (Ring Road / IT Hub)",
+            "impact_percentage": "+12.0%",
+            "description": "Transformational arterial connectivity and major commercial catchment zone."
+        })
+
+    # Ready Reckoner / Circle rate revision
+    if scenario.ready_reckoner_revision_percent != 0.0:
+        rate_factor = 1.0 + (scenario.ready_reckoner_revision_percent / 100.0) * 0.45
+        simulated_price *= rate_factor
+        factors.append({
+            "factor": f"Government Benchmark Rate Revision ({scenario.ready_reckoner_revision_percent:+.1f}%)",
+            "impact_percentage": f"{scenario.ready_reckoner_revision_percent * 0.45:+.1f}%",
+            "description": "Direct baseline floor shift induced by State Revenue Department valuation updates."
+        })
+
+    # Time Horizon Projection (Appreciation vs Building Depreciation)
+    if scenario.projected_years > 0:
+        annual_land_appreciation = 0.065  # 6.5% annual capital appreciation
+        annual_depreciation = 0.012 if scenario.property_type != "Plot" else 0.0  # Building wear
+        net_annual_growth = annual_land_appreciation - annual_depreciation
+        compound_growth = (1.0 + net_annual_growth) ** scenario.projected_years
+        simulated_price *= compound_growth
+        factors.append({
+            "factor": f"Time Horizon ({scenario.projected_years} Years)",
+            "impact_percentage": f"{(compound_growth - 1.0) * 100:+.1f}%",
+            "description": f"Compounded capital appreciation ({annual_land_appreciation*100:.1f}%) minus structural depreciation."
+        })
+
+    simulated_price = round(simulated_price, 2)
+    price_delta = round(simulated_price - baseline_price, 2)
+    percent_delta = round((price_delta / baseline_price) * 100, 2) if baseline_price > 0 else 0.0
+
+    return {
+        "status": "success",
+        "city": scenario.city,
+        "locality": scenario.locality,
+        "property_type": scenario.property_type,
+        "baseline_price_inr": baseline_price,
+        "simulated_price_inr": simulated_price,
+        "price_delta_inr": price_delta,
+        "percentage_change": f"{percent_delta:+.2f}%",
+        "active_model_version": baseline_result.get("model_version"),
+        "scenario_factors_applied": factors
+    }
+
+
+# -----------------------------
+# Static Frontend SPA Serving (Single-Container Deployment)
+# -----------------------------
+FRONTEND_DIST = BASE_DIR / "frontend" / "dist"
+
+if FRONTEND_DIST.exists() and (FRONTEND_DIST / "assets").exists():
+    app.mount("/assets", StaticFiles(directory=FRONTEND_DIST / "assets"), name="assets")
+
+    @app.get("/app", response_class=HTMLResponse)
+    @app.get("/app/{full_path:path}", response_class=HTMLResponse)
+    def serve_frontend_app(full_path: str = ""):
+        index_file = FRONTEND_DIST / "index.html"
+        if index_file.exists():
+            return FileResponse(index_file)
+        return HTMLResponse("<h1>ModelWatch UI build not found.</h1>", status_code=404)

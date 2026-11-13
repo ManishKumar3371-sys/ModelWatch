@@ -49,18 +49,6 @@
     },
     {
         "filename": "regression_test.csv",
-        "evaluated_at": "2026-11-09T06:40:02.400755+00:00",
-        "total_predictions": 5,
-        "metrics": {
-            "accuracy": 0.0,
-            "precision": 0.0,
-            "recall": 0.0,
-            "f1_score": 0.0
-        },
-        "status": "Performance evaluation successful"
-    },
-    {
-        "filename": "regression_test.csv",
         "evaluated_at": "2026-11-10T06:35:23.666537+00:00",
         "total_predictions": 5,
         "metrics": {
@@ -80,6 +68,274 @@
             "mse": 7000000000.0,
             "rmse": 83666.0027,
             "r2_score": 0.986
+        },
+        "status": "Regression evaluation successful"
+    },
+    {
+        "filename": "regression_test.csv",
+        "evaluated_at": "2026-11-11T19:18:21.235311+00:00",
+        "total_predictions": 5,
+        "metrics": {
+            "mae": 80000.0,
+            "mse": 7000000000.0,
+            "rmse": 83666.0027,
+            "r2_score": 0.986
+        },
+        "status": "Regression evaluation successful"
+    },
+    {
+        "filename": "performance_test.csv",
+        "evaluated_at": "2026-11-11T19:19:16.413306+00:00",
+        "total_predictions": 10,
+        "metrics": {
+            "accuracy": 0.8,
+            "precision": 0.8,
+            "recall": 0.8,
+            "f1_score": 0.8
+        },
+        "status": "Performance evaluation successful"
+    },
+    {
+        "filename": "performance_test.csv",
+        "evaluated_at": "2026-11-12T06:33:08.284389+00:00",
+        "total_predictions": 10,
+        "metrics": {
+            "accuracy": 0.8,
+            "precision": 0.8,
+            "recall": 0.8,
+            "f1_score": 0.8
+        },
+        "status": "Performance evaluation successful"
+    },
+    {
+        "filename": "performance_test.csv",
+        "evaluated_at": "2026-11-12T06:34:31.522019+00:00",
+        "total_predictions": 10,
+        "metrics": {
+            "accuracy": 0.8,
+            "precision": 0.8,
+            "recall": 0.8,
+            "f1_score": 0.8
+        },
+        "status": "Performance evaluation successful"
+    },
+    {
+        "filename": "regression_test.csv",
+        "evaluated_at": "2026-11-12T06:38:59.843389+00:00",
+        "total_predictions": 5,
+        "metrics": {
+            "mae": 80000.0,
+            "mse": 7000000000.0,
+            "rmse": 83666.0027,
+            "r2_score": 0.986
+        },
+        "status": "Regression evaluation successful"
+    },
+    {
+        "evaluation_type": "classification",
+        "filename": "performance_test.csv",
+        "evaluated_at": "2026-11-12T06:51:50.633000+00:00",
+        "total_predictions": 10,
+        "metrics": {
+            "accuracy": 0.8,
+            "precision": 0.8,
+            "recall": 0.8,
+            "f1_score": 0.8
+        },
+        "status": "Performance evaluation successful"
+    },
+    {
+        "evaluation_type": "regression",
+        "filename": "regression_test.csv",
+        "evaluated_at": "2026-11-12T06:52:53.712269+00:00",
+        "total_predictions": 5,
+        "metrics": {
+            "mae": 80000.0,
+            "mse": 7000000000.0,
+            "rmse": 83666.0027,
+            "r2_score": 0.986
+        },
+        "status": "Regression evaluation successful"
+    },
+    {
+        "evaluation_type": "classification",
+        "filename": "classification_eval.csv",
+        "evaluated_at": "2026-11-13T13:40:25.985263+00:00",
+        "total_predictions": 8,
+        "metrics": {
+            "accuracy": 0.75,
+            "precision": 0.75,
+            "recall": 0.75,
+            "f1_score": 0.75
+        },
+        "status": "Performance evaluation successful"
+    },
+    {
+        "evaluation_type": "regression",
+        "filename": "regression_eval.csv",
+        "evaluated_at": "2026-11-13T13:40:26.000606+00:00",
+        "total_predictions": 5,
+        "metrics": {
+            "mae": 7.0,
+            "mse": 55.0,
+            "rmse": 7.4162,
+            "r2_score": 0.9972
+        },
+        "status": "Regression evaluation successful"
+    },
+    {
+        "evaluation_type": "classification",
+        "filename": "classification_eval.csv",
+        "evaluated_at": "2026-11-13T13:43:40.315604+00:00",
+        "total_predictions": 8,
+        "metrics": {
+            "accuracy": 0.75,
+            "precision": 0.75,
+            "recall": 0.75,
+            "f1_score": 0.75
+        },
+        "status": "Performance evaluation successful"
+    },
+    {
+        "evaluation_type": "regression",
+        "filename": "regression_eval.csv",
+        "evaluated_at": "2026-11-13T13:43:40.343545+00:00",
+        "total_predictions": 5,
+        "metrics": {
+            "mae": 7.0,
+            "mse": 55.0,
+            "rmse": 7.4162,
+            "r2_score": 0.9972
+        },
+        "status": "Regression evaluation successful"
+    },
+    {
+        "evaluation_type": "classification",
+        "filename": "classification_eval.csv",
+        "evaluated_at": "2026-11-13T13:46:52.451692+00:00",
+        "total_predictions": 8,
+        "metrics": {
+            "accuracy": 0.75,
+            "precision": 0.75,
+            "recall": 0.75,
+            "f1_score": 0.75
+        },
+        "status": "Performance evaluation successful"
+    },
+    {
+        "evaluation_type": "regression",
+        "filename": "regression_eval.csv",
+        "evaluated_at": "2026-11-13T13:46:52.478105+00:00",
+        "total_predictions": 5,
+        "metrics": {
+            "mae": 7.0,
+            "mse": 55.0,
+            "rmse": 7.4162,
+            "r2_score": 0.9972
+        },
+        "status": "Regression evaluation successful"
+    },
+    {
+        "evaluation_type": "classification",
+        "filename": "classification_eval.csv",
+        "evaluated_at": "2026-11-13T13:53:52.411888+00:00",
+        "total_predictions": 8,
+        "metrics": {
+            "accuracy": 0.75,
+            "precision": 0.75,
+            "recall": 0.75,
+            "f1_score": 0.75
+        },
+        "status": "Performance evaluation successful"
+    },
+    {
+        "evaluation_type": "regression",
+        "filename": "regression_eval.csv",
+        "evaluated_at": "2026-11-13T13:53:52.438270+00:00",
+        "total_predictions": 5,
+        "metrics": {
+            "mae": 7.0,
+            "mse": 55.0,
+            "rmse": 7.4162,
+            "r2_score": 0.9972
+        },
+        "status": "Regression evaluation successful"
+    },
+    {
+        "evaluation_type": "classification",
+        "filename": "classification_eval.csv",
+        "evaluated_at": "2026-11-13T13:53:52.961784+00:00",
+        "total_predictions": 8,
+        "metrics": {
+            "accuracy": 0.75,
+            "precision": 0.75,
+            "recall": 0.75,
+            "f1_score": 0.75
+        },
+        "status": "Performance evaluation successful"
+    },
+    {
+        "evaluation_type": "regression",
+        "filename": "regression_eval.csv",
+        "evaluated_at": "2026-11-13T13:53:52.986550+00:00",
+        "total_predictions": 5,
+        "metrics": {
+            "mae": 7.0,
+            "mse": 55.0,
+            "rmse": 7.4162,
+            "r2_score": 0.9972
+        },
+        "status": "Regression evaluation successful"
+    },
+    {
+        "evaluation_type": "classification",
+        "filename": "classification_eval.csv",
+        "evaluated_at": "2026-11-13T13:55:39.064729+00:00",
+        "total_predictions": 8,
+        "metrics": {
+            "accuracy": 0.75,
+            "precision": 0.75,
+            "recall": 0.75,
+            "f1_score": 0.75
+        },
+        "status": "Performance evaluation successful"
+    },
+    {
+        "evaluation_type": "regression",
+        "filename": "regression_eval.csv",
+        "evaluated_at": "2026-11-13T13:55:39.078308+00:00",
+        "total_predictions": 5,
+        "metrics": {
+            "mae": 7.0,
+            "mse": 55.0,
+            "rmse": 7.4162,
+            "r2_score": 0.9972
+        },
+        "status": "Regression evaluation successful"
+    },
+    {
+        "evaluation_type": "classification",
+        "filename": "classification_eval.csv",
+        "evaluated_at": "2026-11-13T14:23:15.891877+00:00",
+        "total_predictions": 8,
+        "metrics": {
+            "accuracy": 0.75,
+            "precision": 0.75,
+            "recall": 0.75,
+            "f1_score": 0.75
+        },
+        "status": "Performance evaluation successful"
+    },
+    {
+        "evaluation_type": "regression",
+        "filename": "regression_eval.csv",
+        "evaluated_at": "2026-11-13T14:23:15.920891+00:00",
+        "total_predictions": 5,
+        "metrics": {
+            "mae": 7.0,
+            "mse": 55.0,
+            "rmse": 7.4162,
+            "r2_score": 0.9972
         },
         "status": "Regression evaluation successful"
     }

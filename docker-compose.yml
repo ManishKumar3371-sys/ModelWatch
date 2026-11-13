@@ -1,0 +1,22 @@
+services:
+  modelwatch:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: modelwatch:latest
+    container_name: modelwatch-platform
+    ports:
+      - "8000:8000"
+    environment:
+      - ENVIRONMENT=production
+      - DISABLE_EMAIL_ALERT=1
+      - CORS_ORIGINS=http://localhost:5173,http://localhost:8000,http://127.0.0.1:8000
+    volumes:
+      - ./experiments:/app/experiments
+      - ./datasets:/app/datasets
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3

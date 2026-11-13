@@ -1,0 +1,23 @@
+{
+    "model_name": "Property Price Random Forest",
+    "dataset": "property_prices.csv",
+    "records": 302,
+    "training_samples": 241,
+    "testing_samples": 61,
+    "features": [
+        "city",
+        "property_type",
+        "locality",
+        "area_sqft",
+        "area_basis",
+        "bedrooms",
+        "property_age",
+        "price_type"
+    ],
+    "target": "price_inr",
+    "mae": 3178791.361383176,
+    "mse": 29924790869186.94,
+    "rmse": 5470355.643757263,
+    "r2_score": 0.7206093155975566,
+    "trained_at": "2026-11-13T11:44:53.182064+00:00"
+}

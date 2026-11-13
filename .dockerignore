@@ -1,0 +1,19 @@
+node_modules/
+frontend/node_modules/
+frontend/dist/
+venv/
+__pycache__/
+*.py[cod]
+.git/
+.gitignore
+.vscode/
+.idea/
+archive/
+*.log
+*.tmp
+tests/
+
+# Environment secrets
+.env
+.env.*
+!.env.example

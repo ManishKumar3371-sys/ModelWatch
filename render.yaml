@@ -1,0 +1,15 @@
+
+services:
+  - type: web
+    name: modelwatch-api
+    runtime: python
+    plan: free
+    region: singapore
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn backend.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    envVars:
+      - key: ENVIRONMENT
+        value: production
+      - key: DISABLE_EMAIL_ALERT
+        value: "1"

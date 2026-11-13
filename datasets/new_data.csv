@@ -1,11 +1,61 @@
-area,bedrooms,age,price
-1200,2,3,3500000
-1500,3,6,4500000
-1800,3,8,5500000
-2000,4,5,6500000
-2200,4,12,7500000
-2500,4,15,8500000
-2800,5,10,9500000
-3000,5,18,10500000
-3200,5,20,11500000
-3500,6,22,12500000
+property_id,city,property_type,locality,area_sqft,area_basis,bedrooms,property_age,price_inr,price_type,source_name,source_url,collected_date
+PRY006,Prayagraj,Plot,Panasa,4070.3,Plot Area,,,2810000.0,Asking,BuySellProperty,https://buysellproperty.in/buy/prayagraj/panasa/335-sq-yd-plot-for-sale-in-panasa-allahabad-212307-b0af,2026-11-13
+PRY150,Prayagraj,Flat,Civil Lines,1980.4,Carpet,3.0,Less than 5 years,19610000.0,Asking,BuySellProperty,https://www.buysellproperty.com/property/pry150,2026-11-13
+PRY127,Prayagraj,Independent House,Ashok Nagar,1879.2,Carpet,2.0,New,17850000.0,Asking,BuySellProperty,https://www.buysellproperty.com/property/pry127,2026-11-13
+PRY126,Prayagraj,Independent House,M L N Engg.Coll,2235.6,Carpet,3.0,New,10760000.0,Asking,BuySellProperty,https://www.buysellproperty.com/property/pry126,2026-11-13
+PUN093,Pune,Flat,Kharadi,649.4,Carpet,1.0,New,6530000.0,Asking,BuySellProperty,https://www.buysellproperty.com/property/pun093,2026-11-13
+PRY059,Prayagraj,Flat,Mumfordganj,1238.0,Built-up,2.0,10+ years,8290000.0,Asking,99acres,https://www.99acres.com/property/pry059,2026-11-13
+PUN080,Pune,Flat,Wakad,1393.2,Built-up,2.0,Less than 5 years,11540000.0,Asking,Magicbricks,https://www.magicbricks.com/property/pun080,2026-11-13
+PRY011,Prayagraj,Independent House,M L N Engg.Coll,2096.6,Built-up,4.0,1-5 Years,2810000.0,Asking,BuySellProperty,https://buysellproperty.in/buy/prayagraj/m-l-n-engg-coll/4-bhk-independent-house-for-sale-in-m-l-n-engg-coll-allahabad-211004-bea1,2026-11-13
+PUN053,Pune,Flat,Maan Road,648.0,Carpet,1.0,Under Construction,4680000.0,Asking,BuySellProperty,https://www.buysellproperty.com/property/pun053,2026-11-13
+PRY054,Prayagraj,Independent House,Tagore Town,3018.6,Built-up,4.0,New,25900000.0,Asking,RealEstateIndia,https://www.realestateindia.com/property/pry054,2026-11-13
+PRY060,Prayagraj,Independent House,Gauspur,3223.8,Carpet,4.0,Less than 5 years,11250000.0,Asking,99acres,https://www.99acres.com/property/pry060,2026-11-13
+PUN030,Pune,Flat,Pisoli,1942.6,Carpet,3.0,Under Construction,10400000.0,Asking,Magicbricks,https://www.magicbricks.com/property/pun030,2026-11-13
+PUN143,Pune,Flat,Wakad,2907.9,Super Built-up,4.0,Less than 5 years,25370000.0,Asking,RealEstateIndia,https://www.realestateindia.com/property/pun143,2026-11-13
+PRY117,Prayagraj,Independent House,Katra,2332.8,Carpet,3.0,Under Construction,17110000.0,Asking,Housing.com,https://www.housing.com.com/property/pry117,2026-11-13
+PRY118,Prayagraj,Plot,Bara,4725.0,Plot Area,,,6360000.0,Asking,99acres,https://www.99acres.com/property/pry118,2026-11-13
+PRY062,Prayagraj,Flat,Bhelsi,1784.7,Built-up,3.0,Less than 5 years,4930000.0,Asking,BuySellProperty,https://www.buysellproperty.com/property/pry062,2026-11-13
+PUN119,Pune,Flat,Keshav Nagar,1260.9,Built-up,2.0,Under Construction,9590000.0,Registered,BuySellProperty,https://www.buysellproperty.com/property/pun119,2026-11-13
+PRY139,Prayagraj,Independent House,ADA Colony,4592.7,Carpet,5.0,5-10 years,24640000.0,Registered,Housing.com,https://www.housing.com.com/property/pry139,2026-11-13
+PRY075,Prayagraj,Plot,Jhalwa,2835.0,Plot Area,,,8050000.0,Asking,BuySellProperty,https://www.buysellproperty.com/property/pry075,2026-11-13
+PUN088,Pune,Plot,Wagholi,1620.0,Plot Area,,,7430000.0,Asking,RealEstateIndia,https://www.realestateindia.com/property/pun088,2026-11-13
+PRY044,Prayagraj,Plot,Bara,1822.5,Plot Area,,,2720000.0,Asking,RealEstateIndia,https://www.realestateindia.com/property/pry044,2026-11-13
+PRY105,Prayagraj,Flat,Mumfordganj,1132.6,Carpet,2.0,10+ years,7330000.0,Asking,99acres,https://www.99acres.com/property/pry105,2026-11-13
+PUN114,Pune,Independent House,Wakad,1914.3,Built-up,2.0,Less than 5 years,19150000.0,Asking,Magicbricks,https://www.magicbricks.com/property/pun114,2026-11-13
+PUN051,Pune,Flat,Pisoli,1420.2,Super Built-up,2.0,10+ years,6880000.0,Asking,Magicbricks,https://www.magicbricks.com/property/pun051,2026-11-13
+PRY061,Prayagraj,Flat,Tagore Town,1286.6,Carpet,2.0,Less than 5 years,9890000.0,Asking,Housing.com,https://www.housing.com.com/property/pry061,2026-11-13
+PRY099,Prayagraj,Independent House,George Town,1668.6,Carpet,2.0,10+ years,14210000.0,Registered,Housing.com,https://www.housing.com.com/property/pry099,2026-11-13
+PRY025,Prayagraj,Flat,Civil Lines,2231.6,Carpet,3.0,5-10 years,21160000.0,Asking,RealEstateIndia,https://www.realestateindia.com/property/pry025,2026-11-13
+PRY154,Prayagraj,Independent House,Ashok Nagar,2469.2,Built-up,3.0,Under Construction,20690000.0,Asking,RealEstateIndia,https://www.realestateindia.com/property/pry154,2026-11-13
+PRY082,Prayagraj,Plot,Bara,4725.0,Plot Area,,,6510000.0,Asking,BuySellProperty,https://www.buysellproperty.com/property/pry082,2026-11-13
+PRY159,Prayagraj,Plot,Panasa,2025.0,Plot Area,,,3450000.0,Asking,99acres,https://www.99acres.com/property/pry159,2026-11-13
+PRY028,Prayagraj,Plot,Gauspur,1822.5,Plot Area,,,3800000.0,Asking,Housing.com,https://www.housing.com.com/property/pry028,2026-11-13
+PUN106,Pune,Independent House,Keshav Nagar,4384.8,Built-up,5.0,5-10 years,38480000.0,Asking,RealEstateIndia,https://www.realestateindia.com/property/pun106,2026-11-13
+PRY119,Prayagraj,Plot,Bara,1822.5,Plot Area,,,2770000.0,Asking,BuySellProperty,https://www.buysellproperty.com/property/pry119,2026-11-13
+PRY050,Prayagraj,Independent House,Jhalwa,1788.8,Carpet,2.0,5-10 years,8180000.0,Asking,Magicbricks,https://www.magicbricks.com/property/pry050,2026-11-13
+PRY029,Prayagraj,Plot,Gauspur,1822.5,Plot Area,,,3850000.0,Asking,RealEstateIndia,https://www.realestateindia.com/property/pry029,2026-11-13
+PUN052,Pune,Flat,Viman Nagar,606.2,Super Built-up,1.0,5-10 years,6380000.0,Registered,BuySellProperty,https://www.buysellproperty.com/property/pun052,2026-11-13
+PUN040,Pune,Independent House,Kothrud,3258.9,Carpet,4.0,5-10 years,44870000.0,Registered,Magicbricks,https://www.magicbricks.com/property/pun040,2026-11-13
+PUN028,Pune,Independent House,Wagholi,1680.8,Carpet,2.0,10+ years,10110000.0,Asking,BuySellProperty,https://www.buysellproperty.com/property/pun028,2026-11-13
+PRY033,Prayagraj,Independent House,Mumfordganj,2925.5,Carpet,4.0,10+ years,22210000.0,Asking,Housing.com,https://www.housing.com.com/property/pry033,2026-11-13
+PUN074,Pune,Flat,Aundh,1271.7,Built-up,2.0,5-10 years,15070000.0,Registered,99acres,https://www.99acres.com/property/pun074,2026-11-13
+PUN071,Pune,Independent House,Kothrud,4021.6,Built-up,5.0,10+ years,50650000.0,Registered,RealEstateIndia,https://www.realestateindia.com/property/pun071,2026-11-13
+PRY026,Prayagraj,Plot,Panasa,1215.0,Plot Area,,,2010000.0,Asking,Magicbricks,https://www.magicbricks.com/property/pry026,2026-11-13
+PRY077,Prayagraj,Plot,Panasa,4725.0,Plot Area,,,7180000.0,Asking,Magicbricks,https://www.magicbricks.com/property/pry077,2026-11-13
+PUN029,Pune,Independent House,Kothrud,4102.7,Carpet,4.0,Less than 5 years,59240000.0,Asking,BuySellProperty,https://www.buysellproperty.com/property/pun029,2026-11-13
+PRY008,Prayagraj,Flat,Bhelsi,1121.9,Carpet,2.0,New,2220000.0,Asking,BuySellProperty,https://buysellproperty.in/buy/prayagraj/bhelsi/2-bhk-apartment-for-sale-in-bhelsi-allahabad-221502-06ac,2026-11-13
+PRY087,Prayagraj,Plot,Naini,4725.0,Plot Area,,,11880000.0,Asking,Housing.com,https://www.housing.com.com/property/pry087,2026-11-13
+PRY049,Prayagraj,Independent House,Tagore Town,2798.6,Carpet,4.0,5-10 years,22900000.0,Registered,99acres,https://www.99acres.com/property/pry049,2026-11-13
+PUN137,Pune,Flat,Hinjewadi Phase 3,1131.3,Carpet,2.0,New,9460000.0,Asking,BuySellProperty,https://www.buysellproperty.com/property/pun137,2026-11-13
+PUN089,Pune,Flat,Kharadi,1251.4,Carpet,2.0,Less than 5 years,11840000.0,Asking,99acres,https://www.99acres.com/property/pun089,2026-11-13
+PUN021,Pune,Flat,Wagholi,714.2,Carpet,1.0,Less than 5 years,4660000.0,Asking,BuySellProperty,https://www.buysellproperty.com/property/pun021,2026-11-13
+PRY111,Prayagraj,Flat,Naini,1707.8,Built-up,3.0,5-10 years,5370000.0,Asking,Magicbricks,https://www.magicbricks.com/property/pry111,2026-11-13
+PRY142,Prayagraj,Flat,Bhelsi,1983.2,Built-up,3.0,Less than 5 years,5170000.0,Asking,RealEstateIndia,https://www.realestateindia.com/property/pry142,2026-11-13
+PUN079,Pune,Plot,Lohegaon,1350.0,Plot Area,,,6200000.0,Asking,99acres,https://www.99acres.com/property/pun079,2026-11-13
+PUN070,Pune,Flat,Aundh,2505.6,Built-up,4.0,5-10 years,30610000.0,Asking,99acres,https://www.99acres.com/property/pun070,2026-11-13
+PRY157,Prayagraj,Flat,Ashok Nagar,2180.2,Built-up,4.0,New,18410000.0,Asking,99acres,https://www.99acres.com/property/pry157,2026-11-13
+PUN034,Pune,Independent House,Wagholi,4498.2,Built-up,5.0,5-10 years,31610000.0,Asking,BuySellProperty,https://www.buysellproperty.com/property/pun034,2026-11-13
+PUN094,Pune,Flat,Hinjewadi Phase 3,2274.8,Carpet,3.0,New,19550000.0,Registered,BuySellProperty,https://www.buysellproperty.com/property/pun094,2026-11-13
+PUN025,Pune,Flat,Maan Road,2809.4,Super Built-up,4.0,Less than 5 years,24480000.0,Asking,99acres,https://www.99acres.com/property/pun025,2026-11-13
+PUN151,Pune,Flat,Hinjewadi Phase 3,1524.2,Super Built-up,2.0,Under Construction,10660000.0,Asking,99acres,https://www.99acres.com/property/pun151,2026-11-13
+PUN141,Pune,Independent House,Hadapsar,4047.3,Carpet,5.0,New,39580000.0,Asking,BuySellProperty,https://www.buysellproperty.com/property/pun141,2026-11-13

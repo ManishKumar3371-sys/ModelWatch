@@ -1,15 +1,18 @@
-* {
+*, *::before, *::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-body {
-  font-family: Arial, sans-serif;
-  background: #0b0d17;
-  color: white;
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-button {
-  cursor: pointer;
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background: #f8f6f1;
+  color: #1a2b1b;
 }
+
+button { cursor: pointer; }

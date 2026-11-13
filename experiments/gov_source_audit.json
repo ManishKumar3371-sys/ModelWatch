@@ -1,0 +1,102 @@
+[
+  {
+    "audit_id": "AUDIT-20261113-124455",
+    "timestamp": "2026-11-13T12:44:55.965020+00:00",
+    "total_portals_checked": 7,
+    "tier1_portals_count": 4,
+    "tier2_portals_count": 3,
+    "portals": [
+      {
+        "state": "Maharashtra",
+        "code": "MH",
+        "portal_name": "IGR Maharashtra (SARITA / e-Search)",
+        "url": "https://igrmaharashtra.gov.in",
+        "data_tier": 1,
+        "primary_benchmark": "Ready Reckoner (ASR)",
+        "checked_at": "2026-11-13T12:44:55.716334+00:00",
+        "status": "OFFLINE_OR_SANDBOX_RESTRICTED",
+        "response_code": null,
+        "latency_ms": null,
+        "error_message": "<urlopen error [Errno 11001] getaddrinfo failed>"
+      },
+      {
+        "state": "Uttar Pradesh",
+        "code": "UP",
+        "portal_name": "IGRSUP (Stamp & Registration Dept UP)",
+        "url": "https://igrsup.gov.in",
+        "data_tier": 1,
+        "primary_benchmark": "Circle Rate",
+        "checked_at": "2026-11-13T12:44:55.808841+00:00",
+        "status": "OFFLINE_OR_SANDBOX_RESTRICTED",
+        "response_code": null,
+        "latency_ms": null,
+        "error_message": "<urlopen error [Errno 11001] getaddrinfo failed>"
+      },
+      {
+        "state": "Tamil Nadu",
+        "code": "TN",
+        "portal_name": "TNREGINET",
+        "url": "https://tnreginet.gov.in",
+        "data_tier": 1,
+        "primary_benchmark": "Guideline Value",
+        "checked_at": "2026-11-13T12:44:55.835980+00:00",
+        "status": "OFFLINE_OR_SANDBOX_RESTRICTED",
+        "response_code": null,
+        "latency_ms": null,
+        "error_message": "<urlopen error [Errno 11001] getaddrinfo failed>"
+      },
+      {
+        "state": "Karnataka",
+        "code": "KA",
+        "portal_name": "Kaveri Online 2.0",
+        "url": "https://kaverionline.karnataka.gov.in",
+        "data_tier": 2,
+        "primary_benchmark": "Guidance Value",
+        "checked_at": "2026-11-13T12:44:55.862262+00:00",
+        "status": "OFFLINE_OR_SANDBOX_RESTRICTED",
+        "response_code": null,
+        "latency_ms": null,
+        "error_message": "<urlopen error [Errno 11001] getaddrinfo failed>"
+      },
+      {
+        "state": "Delhi",
+        "code": "DL",
+        "portal_name": "DORIS Delhi",
+        "url": "https://doris.delhigovt.nic.in",
+        "data_tier": 2,
+        "primary_benchmark": "Colony Circle Rates",
+        "checked_at": "2026-11-13T12:44:55.888174+00:00",
+        "status": "OFFLINE_OR_SANDBOX_RESTRICTED",
+        "response_code": null,
+        "latency_ms": null,
+        "error_message": "<urlopen error [Errno 11001] getaddrinfo failed>"
+      },
+      {
+        "state": "Haryana",
+        "code": "HR",
+        "portal_name": "Jamabandi Haryana",
+        "url": "https://jamabandi.nic.in",
+        "data_tier": 1,
+        "primary_benchmark": "Collector Rates",
+        "checked_at": "2026-11-13T12:44:55.913295+00:00",
+        "status": "OFFLINE_OR_SANDBOX_RESTRICTED",
+        "response_code": null,
+        "latency_ms": null,
+        "error_message": "<urlopen error [Errno 11001] getaddrinfo failed>"
+      },
+      {
+        "state": "Gujarat",
+        "code": "GJ",
+        "portal_name": "Garvi Gujarat",
+        "url": "https://garvi.gujarat.gov.in",
+        "data_tier": 2,
+        "primary_benchmark": "Jantri Rates",
+        "checked_at": "2026-11-13T12:44:55.939845+00:00",
+        "status": "OFFLINE_OR_SANDBOX_RESTRICTED",
+        "response_code": null,
+        "latency_ms": null,
+        "error_message": "<urlopen error [Errno 11001] getaddrinfo failed>"
+      }
+    ]
+  }
+]

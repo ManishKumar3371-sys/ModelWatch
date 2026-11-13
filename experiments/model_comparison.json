@@ -1,0 +1,33 @@
+{
+    "dataset": "property_prices_experiment.csv",
+    "records": 20,
+    "cross_validation": "5-fold",
+    "results": [
+        {
+            "model": "Ridge Regression",
+            "mae": 7679708.33,
+            "rmse": 9757471.4,
+            "r2": -1.7156
+        },
+        {
+            "model": "Random Forest",
+            "mae": 8078017.36,
+            "rmse": 9718108.68,
+            "r2": -2.3269
+        },
+        {
+            "model": "Dummy Regressor",
+            "mae": 8288500.0,
+            "rmse": 11360299.13,
+            "r2": -0.611
+        },
+        {
+            "model": "Extra Trees",
+            "mae": 8459266.25,
+            "rmse": 11027911.29,
+            "r2": -7.2382
+        }
+    ],
+    "best_model_by_mae": "Ridge Regression",
+    "warning": "Small dataset. Results are experimental and not reliable market valuation estimates."
+}

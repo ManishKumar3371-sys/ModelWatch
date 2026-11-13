@@ -20,5 +20,357 @@
         ],
         "created_at": "2026-11-03T06:50:07.026393+00:00",
         "updated_at": "2026-11-03T08:34:00.921002+00:00"
+    },
+    {
+        "model_id": "7fdaf068-2230-4990-b2a5-c3ae2df6a47f",
+        "model_name": "Unit Test Model",
+        "algorithm": "GradientBoostingRegressor",
+        "description": "Created during automated verification",
+        "status": "Archived",
+        "current_version": "v1.1",
+        "versions": [
+            {
+                "version": "v1.0",
+                "notes": "Initial model version",
+                "created_at": "2026-11-13T11:46:25.181704+00:00"
+            },
+            {
+                "version": "v1.1",
+                "notes": "Improved features",
+                "created_at": "2026-11-13T11:46:25.193918+00:00"
+            }
+        ],
+        "created_at": "2026-11-13T11:46:25.181716+00:00",
+        "updated_at": "2026-11-13T11:46:25.202311+00:00"
+    },
+    {
+        "model_id": "362d3c77-b27b-4563-8b61-6c818ca59667",
+        "model_name": "Unit Test Model",
+        "algorithm": "GradientBoostingRegressor",
+        "description": "Created during automated verification",
+        "status": "Archived",
+        "current_version": "v1.1",
+        "versions": [
+            {
+                "version": "v1.0",
+                "notes": "Initial model version",
+                "created_at": "2026-11-13T12:22:29.609391+00:00"
+            },
+            {
+                "version": "v1.1",
+                "notes": "Improved features",
+                "created_at": "2026-11-13T12:22:29.620240+00:00"
+            }
+        ],
+        "created_at": "2026-11-13T12:22:29.609403+00:00",
+        "updated_at": "2026-11-13T12:22:29.629344+00:00"
+    },
+    {
+        "model_id": "457d43df-07da-4e37-8f94-20dffe50f6ec",
+        "model_name": "Unit Test Model",
+        "algorithm": "GradientBoostingRegressor",
+        "description": "Created during automated verification",
+        "status": "Archived",
+        "current_version": "v1.1",
+        "versions": [
+            {
+                "version": "v1.0",
+                "notes": "Initial model version",
+                "created_at": "2026-11-13T12:31:11.624372+00:00"
+            },
+            {
+                "version": "v1.1",
+                "notes": "Improved features",
+                "created_at": "2026-11-13T12:31:11.636922+00:00"
+            }
+        ],
+        "created_at": "2026-11-13T12:31:11.624390+00:00",
+        "updated_at": "2026-11-13T12:31:11.646653+00:00"
+    },
+    {
+        "model_id": "9a813886-b220-4222-9c5a-2cf67cbe6bc8",
+        "model_name": "Unit Test Model",
+        "algorithm": "GradientBoostingRegressor",
+        "description": "Created during automated verification",
+        "status": "Archived",
+        "current_version": "v1.1",
+        "versions": [
+            {
+                "version": "v1.0",
+                "notes": "Initial model version",
+                "created_at": "2026-11-13T12:45:43.533426+00:00"
+            },
+            {
+                "version": "v1.1",
+                "notes": "Improved features",
+                "created_at": "2026-11-13T12:45:43.543428+00:00"
+            }
+        ],
+        "created_at": "2026-11-13T12:45:43.533442+00:00",
+        "updated_at": "2026-11-13T12:45:43.553395+00:00"
+    },
+    {
+        "model_id": "a358f8ea-b9f6-4014-b297-ff3c008461bf",
+        "model_name": "Unit Test Model",
+        "algorithm": "GradientBoostingRegressor",
+        "description": "Created during automated verification",
+        "status": "Archived",
+        "current_version": "v1.1",
+        "versions": [
+            {
+                "version": "v1.0",
+                "notes": "Initial model version",
+                "created_at": "2026-11-13T12:48:30.023141+00:00"
+            },
+            {
+                "version": "v1.1",
+                "notes": "Improved features",
+                "created_at": "2026-11-13T12:48:30.034479+00:00"
+            }
+        ],
+        "created_at": "2026-11-13T12:48:30.023153+00:00",
+        "updated_at": "2026-11-13T12:48:30.043776+00:00"
+    },
+    {
+        "model_id": "d7e12896-2626-4e0b-8f59-4d2d3ccc8f76",
+        "model_name": "Unit Test Model",
+        "algorithm": "GradientBoostingRegressor",
+        "description": "Created during automated verification",
+        "status": "Archived",
+        "current_version": "v1.1",
+        "versions": [
+            {
+                "version": "v1.0",
+                "notes": "Initial model version",
+                "created_at": "2026-11-13T12:57:10.828514+00:00"
+            },
+            {
+                "version": "v1.1",
+                "notes": "Improved features",
+                "created_at": "2026-11-13T12:57:10.840244+00:00"
+            }
+        ],
+        "created_at": "2026-11-13T12:57:10.828527+00:00",
+        "updated_at": "2026-11-13T12:57:10.853763+00:00"
+    },
+    {
+        "model_id": "8bbd33b2-3578-4d73-a6bb-a5022409b59d",
+        "model_name": "Unit Test Model",
+        "algorithm": "GradientBoostingRegressor",
+        "description": "Created during automated verification",
+        "status": "Archived",
+        "current_version": "v1.1",
+        "versions": [
+            {
+                "version": "v1.0",
+                "notes": "Initial model version",
+                "created_at": "2026-11-13T13:01:44.203605+00:00"
+            },
+            {
+                "version": "v1.1",
+                "notes": "Improved features",
+                "created_at": "2026-11-13T13:01:44.214794+00:00"
+            }
+        ],
+        "created_at": "2026-11-13T13:01:44.203615+00:00",
+        "updated_at": "2026-11-13T13:01:44.226106+00:00"
+    },
+    {
+        "model_id": "60b5b79d-71ba-4894-88a6-a1b1be30a368",
+        "model_name": "Unit Test Model",
+        "algorithm": "GradientBoostingRegressor",
+        "description": "Created during automated verification",
+        "status": "Archived",
+        "current_version": "v1.1",
+        "versions": [
+            {
+                "version": "v1.0",
+                "notes": "Initial model version",
+                "created_at": "2026-11-13T13:02:42.465120+00:00"
+            },
+            {
+                "version": "v1.1",
+                "notes": "Improved features",
+                "created_at": "2026-11-13T13:02:42.476346+00:00"
+            }
+        ],
+        "created_at": "2026-11-13T13:02:42.465133+00:00",
+        "updated_at": "2026-11-13T13:02:42.486800+00:00"
+    },
+    {
+        "model_id": "f5edfefd-9a63-4884-824b-fbca5b21459a",
+        "model_name": "Unit Test Model",
+        "algorithm": "GradientBoostingRegressor",
+        "description": "Created during automated verification",
+        "status": "Archived",
+        "current_version": "v1.1",
+        "versions": [
+            {
+                "version": "v1.0",
+                "notes": "Initial model version",
+                "created_at": "2026-11-13T13:03:12.014206+00:00"
+            },
+            {
+                "version": "v1.1",
+                "notes": "Improved features",
+                "created_at": "2026-11-13T13:03:12.024892+00:00"
+            }
+        ],
+        "created_at": "2026-11-13T13:03:12.014217+00:00",
+        "updated_at": "2026-11-13T13:03:12.033660+00:00"
+    },
+    {
+        "model_id": "c60b1b71-346f-4748-a648-2f5720e4de32",
+        "model_name": "Unit Test Model",
+        "algorithm": "GradientBoostingRegressor",
+        "description": "Created during automated verification",
+        "status": "Archived",
+        "current_version": "v1.1",
+        "versions": [
+            {
+                "version": "v1.0",
+                "notes": "Initial model version",
+                "created_at": "2026-11-13T13:08:19.279894+00:00"
+            },
+            {
+                "version": "v1.1",
+                "notes": "Improved features",
+                "created_at": "2026-11-13T13:08:19.295093+00:00"
+            }
+        ],
+        "created_at": "2026-11-13T13:08:19.279912+00:00",
+        "updated_at": "2026-11-13T13:08:19.304517+00:00"
+    },
+    {
+        "model_id": "f1d075b0-66be-4f91-bc7f-8f70e20e8c27",
+        "model_name": "Unit Test Model",
+        "algorithm": "GradientBoostingRegressor",
+        "description": "Created during automated verification",
+        "status": "Archived",
+        "current_version": "v1.1",
+        "versions": [
+            {
+                "version": "v1.0",
+                "notes": "Initial model version",
+                "created_at": "2026-11-13T13:40:25.022402+00:00"
+            },
+            {
+                "version": "v1.1",
+                "notes": "Improved features",
+                "created_at": "2026-11-13T13:40:25.042328+00:00"
+            }
+        ],
+        "created_at": "2026-11-13T13:40:25.022425+00:00",
+        "updated_at": "2026-11-13T13:40:25.054320+00:00"
+    },
+    {
+        "model_id": "783c28b7-8849-4372-b8a8-f9c00ac93f71",
+        "model_name": "Unit Test Model",
+        "algorithm": "GradientBoostingRegressor",
+        "description": "Created during automated verification",
+        "status": "Archived",
+        "current_version": "v1.1",
+        "versions": [
+            {
+                "version": "v1.0",
+                "notes": "Initial model version",
+                "created_at": "2026-11-13T13:43:39.246500+00:00"
+            },
+            {
+                "version": "v1.1",
+                "notes": "Improved features",
+                "created_at": "2026-11-13T13:43:39.256158+00:00"
+            }
+        ],
+        "created_at": "2026-11-13T13:43:39.246513+00:00",
+        "updated_at": "2026-11-13T13:43:39.267042+00:00"
+    },
+    {
+        "model_id": "b801bc57-c4ff-4eaa-8435-9beeeba41817",
+        "model_name": "Unit Test Model",
+        "algorithm": "GradientBoostingRegressor",
+        "description": "Created during automated verification",
+        "status": "Archived",
+        "current_version": "v1.1",
+        "versions": [
+            {
+                "version": "v1.0",
+                "notes": "Initial model version",
+                "created_at": "2026-11-13T13:46:51.726935+00:00"
+            },
+            {
+                "version": "v1.1",
+                "notes": "Improved features",
+                "created_at": "2026-11-13T13:46:51.737454+00:00"
+            }
+        ],
+        "created_at": "2026-11-13T13:46:51.726949+00:00",
+        "updated_at": "2026-11-13T13:46:51.747686+00:00"
+    },
+    {
+        "model_id": "95fd9491-011f-457c-93a6-183347167ec0",
+        "model_name": "Unit Test Model",
+        "algorithm": "GradientBoostingRegressor",
+        "description": "Created during automated verification",
+        "status": "Archived",
+        "current_version": "v1.1",
+        "versions": [
+            {
+                "version": "v1.0",
+                "notes": "Initial model version",
+                "created_at": "2026-11-13T13:53:51.672624+00:00"
+            },
+            {
+                "version": "v1.1",
+                "notes": "Improved features",
+                "created_at": "2026-11-13T13:53:51.681829+00:00"
+            }
+        ],
+        "created_at": "2026-11-13T13:53:51.672641+00:00",
+        "updated_at": "2026-11-13T13:53:51.693686+00:00"
+    },
+    {
+        "model_id": "0bd934d6-0ea4-4a9b-b682-670e05dca8d7",
+        "model_name": "Unit Test Model",
+        "algorithm": "GradientBoostingRegressor",
+        "description": "Created during automated verification",
+        "status": "Archived",
+        "current_version": "v1.1",
+        "versions": [
+            {
+                "version": "v1.0",
+                "notes": "Initial model version",
+                "created_at": "2026-11-13T13:55:38.358803+00:00"
+            },
+            {
+                "version": "v1.1",
+                "notes": "Improved features",
+                "created_at": "2026-11-13T13:55:38.379878+00:00"
+            }
+        ],
+        "created_at": "2026-11-13T13:55:38.358813+00:00",
+        "updated_at": "2026-11-13T13:55:38.391404+00:00"
+    },
+    {
+        "model_id": "4bd4825e-5287-42a0-aeba-808684ee11d0",
+        "model_name": "Unit Test Model",
+        "algorithm": "GradientBoostingRegressor",
+        "description": "Created during automated verification",
+        "status": "Archived",
+        "current_version": "v1.1",
+        "versions": [
+            {
+                "version": "v1.0",
+                "notes": "Initial model version",
+                "created_at": "2026-11-13T14:23:15.188390+00:00"
+            },
+            {
+                "version": "v1.1",
+                "notes": "Improved features",
+                "created_at": "2026-11-13T14:23:15.199143+00:00"
+            }
+        ],
+        "created_at": "2026-11-13T14:23:15.188404+00:00",
+        "updated_at": "2026-11-13T14:23:15.210591+00:00"
     }
 ]
