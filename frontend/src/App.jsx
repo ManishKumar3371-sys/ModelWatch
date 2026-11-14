@@ -11,7 +11,9 @@ import {
   TrendingUp,
   AlertTriangle,
   CheckCircle,
-  History
+  History,
+  Menu,
+  X
 } from "lucide-react";
 import jsPDF from "jspdf";
 import "./App.css";
@@ -34,6 +36,7 @@ function App() {
   const [propertyRecordsLoading, setPropertyRecordsLoading] = useState(false);
   const [propertyRecordsError, setPropertyRecordsError] = useState("");
   const [activePage, setActivePage] = useState("Overview");
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const [driftData, setDriftData] = useState(null);
   const [apiStatus, setApiStatus] = useState("Checking...");
@@ -1403,13 +1406,30 @@ const handleRegressionEvaluation = async () => {
   return (
     <div className="app-container">
 
+      {/* Mobile Backdrop Overlay */}
+      {mobileMenuOpen && (
+        <div
+          className="sidebar-backdrop"
+          onClick={() => setMobileMenuOpen(false)}
+          aria-hidden="true"
+        />
+      )}
+
       {/* SIDEBAR */}
-      <aside className="sidebar">
+      <aside className={`sidebar ${mobileMenuOpen ? "mobile-open" : ""}`}>
         <div className="brand">
           <div className="brand-icon">
             <BrainCircuit size={24} />
           </div>
           <span>ModelWatch</span>
+          <button
+            type="button"
+            className="mobile-close-btn"
+            onClick={() => setMobileMenuOpen(false)}
+            aria-label="Close navigation"
+          >
+            <X size={20} />
+          </button>
         </div>
 
         <p className="menu-label">WORKSPACE</p>
@@ -1424,7 +1444,10 @@ const handleRegressionEvaluation = async () => {
                 className={`nav-item ${
                   activePage === item.name ? "active" : ""
                 }`}
-                onClick={() => setActivePage(item.name)}
+                onClick={() => {
+                  setActivePage(item.name);
+                  setMobileMenuOpen(false);
+                }}
               >
                 <Icon size={19} />
                 <span>{item.name}</span>
@@ -1444,17 +1467,27 @@ const handleRegressionEvaluation = async () => {
 
         {/* TOPBAR */}
         <header className="topbar">
-          <div>
-            <h2>{activePage}</h2>
-            <p>Monitor your machine learning models</p>
+          <div className="topbar-left">
+            <button
+              type="button"
+              className="mobile-menu-toggle"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              aria-label="Toggle navigation menu"
+            >
+              <Menu size={22} />
+            </button>
+            <div>
+              <h2>{activePage}</h2>
+              <p className="topbar-subtitle">Monitor your machine learning models</p>
+            </div>
           </div>
 
           <div className="top-actions">
-            <button className="icon-button">
+            <button className="icon-button" aria-label="Search">
               <Search size={19} />
             </button>
 
-            <button className="icon-button">
+            <button className="icon-button" aria-label="Notifications">
               <Bell size={19} />
             </button>
 

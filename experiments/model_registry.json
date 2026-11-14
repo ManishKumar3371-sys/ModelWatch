@@ -396,6 +396,38 @@
             "trained_at": "2026-11-13T14:23:15.712509+00:00",
             "status": "Inactive",
             "notes": "Auto-retrained on 362 records. R2 delta: -0.0342"
+        },
+        {
+            "version": "v14",
+            "model_name": "Continuous Retrained Random Forest (v14)",
+            "algorithm": "RandomForestRegressor (Auto-Retrained)",
+            "model_path": "trained_models/versions/v14_property_price_model.pkl",
+            "dataset": "property_prices_merged.csv",
+            "records": 362,
+            "training_samples": 289,
+            "testing_samples": 73,
+            "features": [
+                "city",
+                "property_type",
+                "locality",
+                "area_sqft",
+                "area_basis",
+                "bedrooms",
+                "property_age",
+                "price_type"
+            ],
+            "target": "price_inr",
+            "mae": 2636943.35,
+            "mse": 19279599639669.73,
+            "r2_score": 0.7569,
+            "parameters": {
+                "n_estimators": 220,
+                "max_depth": 18,
+                "min_samples_split": 3
+            },
+            "trained_at": "2026-11-14T06:50:36.291666+00:00",
+            "status": "Inactive",
+            "notes": "Auto-retrained on 362 records. R2 delta: -0.0342"
         }
     ]
 }

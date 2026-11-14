@@ -372,5 +372,27 @@
         ],
         "created_at": "2026-11-13T14:23:15.188404+00:00",
         "updated_at": "2026-11-13T14:23:15.210591+00:00"
+    },
+    {
+        "model_id": "3cc57eb5-7ba1-4320-aaf5-fd1b5514507a",
+        "model_name": "Unit Test Model",
+        "algorithm": "GradientBoostingRegressor",
+        "description": "Created during automated verification",
+        "status": "Archived",
+        "current_version": "v1.1",
+        "versions": [
+            {
+                "version": "v1.0",
+                "notes": "Initial model version",
+                "created_at": "2026-11-14T06:50:35.716470+00:00"
+            },
+            {
+                "version": "v1.1",
+                "notes": "Improved features",
+                "created_at": "2026-11-14T06:50:35.733467+00:00"
+            }
+        ],
+        "created_at": "2026-11-14T06:50:35.716501+00:00",
+        "updated_at": "2026-11-14T06:50:35.747838+00:00"
     }
 ]
